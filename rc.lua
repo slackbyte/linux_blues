@@ -4,10 +4,12 @@ require("awful.autofocus")
 require("awful.rules")
 -- Theme handling library
 require("beautiful")
--- Notification library
-require("naughty")
 -- Widget library
 require("vicious")
+-- Notification library
+require("naughty")
+-- Dynamic tagging library
+require("eminent")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -48,7 +50,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
-   tags[s] = awful.tag( { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[6])
+   tags[s] = awful.tag( { "▪", "▪", "▪", "▪", "▪", "▪", "▪", "▪", "▪" }, s, layouts[6])
 end
 -- }}}
 
@@ -68,11 +70,50 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
+
+-- pangoify(attribute, value, text) = <span attribute="value">text</span>
+function pangoify (attribute, value, text)
+   return "<span " .. attribute .. "=\"" .. value .. "\">" .. text .. "</span>"
+end
+
 -- }}}
 
 -- {{{ Wibox
--- Create a textclock widget
+-- Create a textclock widget with popup calendar
+local calendar = nil
+local offset = 0
+
+function remove_calendar()
+   if calendar ~= nil then
+      naughty.destroy(calendar)
+      calendar = nil
+      offset = 0
+   end
+end
+
+function add_calendar(inc_offset)
+   local save_offset = offset
+   remove_calendar()
+   offset = save_offset + inc_offset
+   local datespec = os.date("*t")
+   datespec = datespec.year * 12 + datespec.month - 1 + offset
+   datespec = (datespec % 12 + 1) .. " " .. math.floor(datespec / 12)
+   local cal = awful.util.pread("cal -m " .. datespec)
+   cal = string.gsub(cal, "^%s*(.-)%s*$", "%1")
+   calendar = naughty.notify({
+      text = string.format('<span font_desc="%s">%s</span>', "monospace", cal),
+      timeout = 0, hover_timeout = 0.5,
+      width = 160
+   })
+end
+
 mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock:add_signal("mouse::enter", function() add_calendar(0) end)
+mytextclock:add_signal("mouse::leave", remove_calendar)
+mytextclock:buttons(awful.util.table.join(
+         awful.button({ }, 4, function() add_calendar(-1) end),
+         awful.button({ }, 5, function() add_calendar(1) end)
+   ))
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -131,31 +172,32 @@ spacer.text = " "
 
 -- widget separator
 separator = widget({ type = "textbox" })
-separator.text = " | "
+separator.text = pangoify("fgcolor", theme.arch_grey, " :: ")
 
 -- battery widget
-battext = widget({ type = "textbox" })
-baticon = widget({ type = "imagebox" })
-vicious.register(battext, vicious.widgets.bat, 
+batbar = awful.widget.progressbar()
+batbar:set_width(60)
+batbar:set_height(10)
+batbar:set_max_value(1)
+batbar:set_background_color(beautiful.bg_normal)
+batbar:set_border_color(beautiful.widget_label)
+awful.widget.layout.margins[batbar.widget] = { top = 4 }
+vicious.register(batbar, vicious.widgets.bat, 
     function (widget, args)
-       
-        if (args[2] >= 95) then
-           baticon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/bat_full.png")
-        elseif (args[2] >= 80) then
-           baticon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/bat_100.png")
-        elseif (args[2] >= 60) then
-           baticon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/bat_75.png")
-        elseif (args[2] >= 35) then
-           baticon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/bat_50.png")
-        elseif (args[2] >= 10) then
-           baticon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/bat_25.png")
+        if args[2] > 10 then
+            widget:set_color(beautiful.widget_data)
         else
-           baticon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/bat_empty.png")
+            widget:set_color(beautiful.widget_urgent)
         end
 
-        return "BAT: <span fgcolor=\"".. beautiful.widget_field .. "\">" .. args[2] .. "% (" .. args[3] .. ") " .. args[1] .. " </span>"
+        return args[2]
     end,
 29, "BAT0")
+
+battext = widget({ type = "textbox" })
+battext.text = "BAT "
+
+batwidget = { battext, batbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- cpu widget
 cpubuttons = awful.util.table.join(
@@ -165,44 +207,50 @@ cpubuttons = awful.util.table.join(
          end)
       )
 
-cpulabel = widget({ type = "textbox" })
-cpulabel.text = "CPU: "
-cpulabel:buttons(cpubuttons)
+vicious.cache(vicious.widgets.cpu)
 
-cpuusage = widget({ type = "textbox" })
-vicious.register(cpuusage, vicious.widgets.cpu, 
-      "<span fgcolor=\""..beautiful.widget_field.."\">$1%</span>", 7)
-cpuusage:buttons(cpubuttons)
+cputext = widget({ type = "textbox" })
+cputext.text = "CPU "
+--cputext:buttons(cpubuttons)
+
+cpugraph = awful.widget.graph()
+cpugraph:set_width(60)
+cpugraph:set_height(10)
+cpugraph:set_background_color(beautiful.bg_normal)
+cpugraph:set_border_color(beautiful.widget_label)
+cpugraph:set_color(beautiful.widget_data)
+awful.widget.layout.margins[cpugraph.widget] = { top = 4 }
+vicious.register(cpugraph, vicious.widgets.cpu, "$1", 7)
+--cpugraph:buttons(cpubuttons)
 
 cpufreq = widget({ type = "textbox" })
 vicious.register(cpufreq, vicious.widgets.cpufreq,
       function (widget, args)
          if args[1] < 1000 then
-            return "<span fgcolor=\""..beautiful.widget_field.."\">"..args[1].." MHz ("..args[5]..")</span>"
+            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[1] .. " MHz") .. ") "
          else
-            return "<span fgcolor=\""..beautiful.widget_field.."\">"..args[2].." GHZ ("..args[5]..")</span>"
+            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[2] .. " GHz") .. ")"
          end
       end,
 7, "cpu0")
-cpufreq:buttons(cpubuttons)
+--cpufreq:buttons(cpubuttons)
 
-cpuwidget = { cpulabel, cpuusage, spacer, cpufreq, layout = awful.widget.layout.horizontal.leftright }
+cpuwidget = { cputext, cpugraph.widget, spacer, cpufreq, layout = awful.widget.layout.horizontal.leftright }
 
 -- volume widget
 voltext = widget({ type = "textbox" })
-volicon = widget({ type = "imagebox" })
-vicious.register(voltext, vicious.widgets.volume, 
-    function (widget, args)
-        if args[2] == "" then
-            volicon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/vol_on.png")
-            return "" .. args[1] .. "% "
-        else
-            volicon.image = image(awful.util.getdir("config") .. "/themes/slackware/icons/vol_muted.png")
-            return "--  "
-        end
-    end,
-3, "Master")
-vicious.unregister(voltext, true)
+--volicon = widget({ type = "imagebox" })
+--vicious.register(voltext, vicious.widgets.volume, "$1", 3, 'Master')
+--    function (widget, args)
+--        if args[2] == "" then
+--            volicon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/vol_on.png")
+--            return "" .. args[1] .. "% "
+--        else
+--            volicon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/vol_muted.png")
+--            return "--  "
+--        end
+--    end,
+--vicious.unregister(voltext, true)
 
 -- net widget
 netbuttons = awful.util.table.join(
@@ -211,33 +259,63 @@ netbuttons = awful.util.table.join(
          end)
       )
 
-wifiwidget = widget({ type = "textbox" })
-wlan = true;
-eth = false;
-vicious.register(wifiwidget, vicious.widgets.wifi,
+wifitext = widget({ type = "textbox" })
+wifitext.text = "WIFI "
+
+wifibar = awful.widget.progressbar()
+wifibar:set_width(60)
+wifibar:set_height(10)
+wifibar:set_max_value(1)
+wifibar:set_background_color(beautiful.bg_normal)
+wifibar:set_border_color(beautiful.widget_label)
+wifibar:set_color(beautiful.widget_data)
+awful.widget.layout.margins[wifibar.widget] = { top = 4 }
+essidtext = widget({ type="textbox" })
+vicious.register(wifibar, vicious.widgets.wifi,
     function (widget, args)
         if args["{ssid}"] == "N/A" or args["{link}"] == 0 then
-            wlan = false;
-            return ""
+            essidtext.text = ""
+            return 0
         else
-            wlan = true;
-            return separator.text .. "WIFI: <span fgcolor=\"" .. beautiful.widget_field .. "\">" .. args["{link}"] .. "/70</span>" .. 
-               " ".. separator.text .. " " .. "essid: <span fgcolor=\"" .. beautiful.widget_field .. "\">" .. args["{ssid}"] .. "</span>"
+            essidtext.text = " (" .. pangoify("fgcolor", beautiful.widget_data, args["{ssid}"]) .. ")"
+            return args["{link}"]
         end
     end,
 7, "wlan0")
 
-trafficwidget = widget({ type = "textbox" })
-vicious.register(trafficwidget, vicious.widgets.net, 
+uptext = widget({ type = "textbox" })
+uptext.text = "UP "
+
+upgraph = awful.widget.graph()
+upgraph:set_width(60)
+upgraph:set_height(10)
+upgraph:set_background_color(beautiful.bg_normal)
+upgraph:set_border_color(beautiful.widget_label)
+upgraph:set_color(beautiful.widget_data)
+awful.widget.layout.margins[upgraph.widget] = { top = 4 }
+vicious.register(upgraph, vicious.widgets.net, 
     function (widget, args)
-         if wlan then
-            return " " .. separator.text .. " up: <span fgcolor=\"" .. beautiful.widget_field .. "\">" .. args["{wlan0 up_kb}"] ..
-                " Kb/s</span> down: <span fgcolor=\"" .. beautiful.widget_field .. "\">" .. args["{wlan0 down_kb}"] .. " Kb/s</span>"
-         end
+            return args["{wlan0 up_kb}"]
     end,
 3)
 
-netwidget = { trafficwidget, wifiwidget, layout = awful.widget.layout.horizontal.rightleft }
+downtext = widget({ type = "textbox" })
+downtext.text = "DOWN "
+
+downgraph = awful.widget.graph()
+downgraph:set_width(60)
+downgraph:set_height(10)
+downgraph:set_background_color(beautiful.bg_normal)
+downgraph:set_border_color(beautiful.widget_label)
+downgraph:set_color(beautiful.widget_data)
+awful.widget.layout.margins[downgraph.widget] = { top = 4 }
+vicious.register(downgraph, vicious.widgets.net, 
+    function (widget, args)
+            return args["{wlan0 down_kb}"]
+    end,
+3)
+
+netwidget = { downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator, layout = awful.widget.layout.horizontal.rightleft }
 
 
 for s = 1, screen.count() do
@@ -269,8 +347,7 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
         s == 1 and mysystray or nil,
-        baticon,
-        voltext, volicon, spacer, 
+        --voltext,-- volicon, spacer, 
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -283,12 +360,12 @@ for s = 1, screen.count() do
 
     bottomwibox[s].widgets = {
        {
-          spacer, cpuwidget,
-          separator, battext,
+          separator, cpuwidget,
+          separator, batwidget,
           separator, mypromptbox[s],
           layout = awful.widget.layout.horizontal.leftright
        },
-       spacer, netwidget,
+       separator, netwidget,
        layout = awful.widget.layout.horizontal.rightleft
     }
 end
@@ -371,12 +448,12 @@ globalkeys = awful.util.table.join(
         end),
     awful.key({},                    "XF86AudioLowerVolume",
         function ()
-            awful.util.spawn_with_shell("amixer set Master playback 2-")
+            awful.util.spawn_with_shell("amixer set Master playback 2%-")
             vicious.force({ voltext })
         end),
     awful.key({},                    "XF86AudioRaiseVolume",
         function ()
-            awful.util.spawn_with_shell("amixer set Master playback 2+")
+            awful.util.spawn_with_shell("amixer set Master playback 2%+")
             vicious.force({ voltext })
         end),
 

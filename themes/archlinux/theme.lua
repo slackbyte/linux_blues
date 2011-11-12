@@ -2,23 +2,35 @@
 theme = {}
 
 theme.font          = "sans 8"
+theme.arch_blue     = "#1692D0"
+theme.arch_darkblue = "#08364D"
+theme.arch_green    = "#16D016"
+theme.arch_darkgreen= "#084C08"
+theme.arch_red      = "#D01616"
+theme.arch_darkred  = "#4D0808"
+theme.arch_white    = "#FEFEFE"
+theme.arch_grey     = "#D0D0D0"
+theme.arch_darkgrey = "#4C4C4C"
+theme.arch_black    = "#0D0D0D"
 
-theme.bg_normal     = "#0d0d0d"
-theme.bg_focus      = "#0d0d0d"
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_normal     = theme.arch_black
+theme.bg_focus      = theme.arch_black
+theme.bg_urgent     = theme.arch_red
+theme.bg_minimize   = theme.arch_darkgrey
 
-theme.fg_normal     = "#fefefe"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = theme.arch_white
+theme.fg_focus      = theme.arch_blue
+theme.fg_urgent     = theme.arch_white
+theme.fg_minimize   = theme.arch_white
 
-theme.widget_field      = "#1692D0"
+theme.widget_label = theme.arch_white
+theme.widget_data  = theme.arch_blue
+theme.widget_urgent= theme.arch_red
 
 theme.border_width  = "1"
-theme.border_normal = "#000000"
-theme.border_focus  = "#08364d"
-theme.border_marked = "#910F0F"
+theme.border_normal = theme.arch_darkgrey
+theme.border_focus  = theme.arch_darkblue
+theme.border_marked = theme.arch_darkred
 
 theme.taglist_bg_focus = theme.bg_focus
 theme.taglist_fg_focus = theme.widget_field

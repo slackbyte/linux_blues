@@ -1,1 +1,55 @@
-My custom awesome window manager configuration for Arch Linux
+---- ArchByte ----
+A minimalist, yet elegant configuration and theme for the awesome window manager on Arch Linux.
+
+awesome window manager: http://awesome.naquadah.org
+
+
+DESCRIPTION:
+    Although I consider myself to be a power user, ArchByte is created with the 
+    average Linux user in mind. My goal is for both the power user and average user to feel right at home.
+
+DEPENDENCIES:
+    - vicious (http://git.sysphere.org/vicious/)
+    - eminent (http://git.glacicle.org/eminent)
+        - or you can just delete the line in rc.lua that says require("eminent")
+    - git (for installation)
+
+INSTALLATION:
+    - if the awesome window manager is not in your distribution's repositories, you can find several
+      package formats and the source code on awesome's website (linked above).
+    - once awesome is installed, create a directory in your home folder called .config/awesome
+      (if .config does not already exist, it will have to be created first)
+    - to install ArchByte, enter the following commands in a terminal:
+        cd %HOME/.config/awesome
+        git clone git://github.com/slackbyte/ArchByte.git
+    - if awesome is currently running, it will have to be restarted (shortcut: Mod4+CTRL+r)
+    - celebrate your success in installing ArchByte in whatever way you are accustomed
+
+CHANGE LOG:
+    - changed the style of most widgets (inspired by xeNULL http://xenull.blogspot.com/)
+    - cleaned up widget grouping in favor of modularity
+    - temporarily disabled volume widget due to some issues I'm having (hopefully will be fixed soon)
+    - added mouse-over calender to clock widget (using the example on the awesome wiki)
+    - cleaned up color variables in archlinux/theme.lua
+    - added a useful "pangoify" function to clean up inserting pango markup into strings
+
+TODO (in order of priority):
+    - fix volume widget
+    - change font
+    - add mouse-over tooltips to widgets (possibly using naughty)
+        - mousing over CPU widget will display a list of the status of all individual cpus
+        - mousing over BAT widget will display estimated time left and current state
+        - more is planned and even more will be created
+    - add naughty support
+        - integrate common applications with naughty
+    - much more is constantly being added! If you have an idea, don't hesitate to suggest it!
+
+
+Suggestions are always more than welcome! If you are having issues, as always google is your friend
+and mine. But if that is somehow unsuccessful, I am willing to attempt to help you in any way I can,
+though I maintain that I am not responsible for any problems that result from you choosing to use
+this configuration or theme.
+
+Contact:
+slackbyte256@gmail.com with "ArchByte" as the subject line 
+
