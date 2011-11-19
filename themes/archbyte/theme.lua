@@ -38,6 +38,10 @@ theme.taglist_fg_focus = theme.widget_field
 theme.tasklist_bg_focus = theme.bg_focus
 theme.tasklist_fg_focus = theme.widget_field
 
+theme.tooltip_opacity = .80
+theme.tooltip_fg_color = theme.widget_field
+theme.tooltip_bg_color = theme.arch_black
+theme.tooltip_border_width = 0
 
 -- There are other variable sets
 -- overriding the default one when
@@ -92,7 +96,7 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 -- You can use your own command to set your wallpaper
-theme.wallpaper_cmd = { "awsetbg " .. awful.util.getdir("config") .. "/themes/archlinux/background.png" }
+theme.wallpaper_cmd = { "awsetbg " .. awful.util.getdir("config") .. "/themes/archbyte/background.png" }
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"

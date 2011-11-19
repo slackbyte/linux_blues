@@ -13,7 +13,7 @@ require("eminent")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init(awful.util.getdir("config") .. "/themes/archlinux/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/themes/archbyte/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xterm -fg green -bg black"
@@ -175,6 +175,11 @@ separator = widget({ type = "textbox" })
 separator.text = pangoify("fgcolor", theme.arch_grey, " :: ")
 
 -- battery widget
+battext = widget({ type = "textbox" })
+battext.text = "BAT "
+
+battooltip = awful.tooltip({ })
+
 batbar = awful.widget.progressbar()
 batbar:set_width(60)
 batbar:set_height(10)
@@ -190,13 +195,17 @@ vicious.register(batbar, vicious.widgets.bat,
             widget:set_color(beautiful.widget_urgent)
         end
 
+        if args[3] ~= "N/A" then
+            battooltip:set_text( args[3] .. " (" .. args[2] .. "%)" )
+        else
+            battooltip:set_text( "(" .. args[2] .. "%)" )
+        end
+
         return args[2]
     end,
 29, "BAT0")
 
-battext = widget({ type = "textbox" })
-battext.text = "BAT "
-
+battooltip:add_to_object( batbar.widget )
 batwidget = { battext, batbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- cpu widget
@@ -262,6 +271,8 @@ netbuttons = awful.util.table.join(
 wifitext = widget({ type = "textbox" })
 wifitext.text = "WIFI "
 
+wifitooltip = awful.tooltip({ })
+
 wifibar = awful.widget.progressbar()
 wifibar:set_width(60)
 wifibar:set_height(10)
@@ -278,10 +289,13 @@ vicious.register(wifibar, vicious.widgets.wifi,
             return 0
         else
             essidtext.text = " (" .. pangoify("fgcolor", beautiful.widget_data, args["{ssid}"]) .. ")"
+            wifitooltip:set_text(args["{link}"] .. "/70")
             return args["{link}"]
         end
     end,
 7, "wlan0")
+
+wifitooltip:add_to_object( wifibar.widget )
 
 uptext = widget({ type = "textbox" })
 uptext.text = "UP "
