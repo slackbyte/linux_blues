@@ -493,7 +493,27 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-        end)
+        end),
+    awful.key({ modkey,           }, "]",
+        function (c)
+            if c.opacity < 0.95 then
+                c.opacity = c.opacity + 0.05
+            else
+                c.opacity = 1.00
+            end
+            c.redraw()
+        end),
+    awful.key({ modkey,           }, "[",
+        function (c)
+            if c.opacity > 0.05 then
+                c.opacity = c.opacity - 0.05
+            else
+                c.opacity = 0.00
+            end
+            c.redraw()
+        end),
+    awful.key({ modkey, "Shift"   }, "]", function (c) c.opacity = 1.00 end),
+    awful.key({ modkey, "Shift"   }, "[", function (c) c.opacity = 0.05 end)
 )
 
 -- Compute the maximum number of digit we need, limited to 9

@@ -25,13 +25,20 @@ INSTALLATION:
     - if awesome is currently running, it will have to be restarted (shortcut: Mod4+CTRL+r)
     - celebrate your success in installing ArchByte in whatever way you are accustomed
 
+KEYBOAD SHORTCUTS:
+    - modkey + i
+        launches default browser (requires $BROWSER to be defined)
+    - modkey + [
+        decrease focused client's opacity
+    - modkey + ]
+        increase focused client's opacity
+    - modkey + Shift + [
+        set focused client's opacity to the minimum (shortcut)
+    - modkey + Shift + ]
+        set focused client's opacity to the maximum (shortcut)
+
 CHANGE LOG:
-    - changed the style of most widgets (inspired by xeNULL http://xenull.blogspot.com/)
-    - cleaned up widget grouping in favor of modularity
-    - temporarily disabled volume widget due to some issues I'm having (hopefully will be fixed soon)
-    - added mouse-over calender to clock widget (using the example on the awesome wiki)
-    - cleaned up color variables in archlinux/theme.lua
-    - added a useful "pangoify" function to clean up inserting pango markup into strings
+    - added keyboard shortcuts for controlling window opacity
 
 TODO (in order of priority):
     - fix volume widget
