@@ -189,12 +189,27 @@ batbar:set_border_color(beautiful.widget_label)
 awful.widget.layout.margins[batbar.widget] = { top = 4 }
 vicious.register(batbar, vicious.widgets.bat, 
     function (widget, args)
-        if args[2] > 10 then
-            widget:set_color(beautiful.widget_data)
+        -- 
+        if args[1] ~= "+" then
+            if args[2] <= 10 then
+                widget:set_color(beautiful.widget_urgent)
+                naughty.notify({
+                    title = "BATTERY:",
+                    text = args[2] .. "%",
+                    position = "bottom_left",
+                    timeout = 28,
+                    fg = beautiful.widget_urgent,
+                    screen = 1,
+                    ontop = true
+                })
+            else
+                widget:set_color(beautiful.widget_data)
+            end
         else
-            widget:set_color(beautiful.widget_urgent)
+            widget:set_color(beautiful.arch_green)
         end
 
+        -- create tooltip
         if args[3] ~= "N/A" then
             battooltip:set_text( args[3] .. " (" .. args[2] .. "%)" )
         else
@@ -268,34 +283,7 @@ netbuttons = awful.util.table.join(
          end)
       )
 
-wifitext = widget({ type = "textbox" })
-wifitext.text = "WIFI "
-
 wifitooltip = awful.tooltip({ })
-
-wifibar = awful.widget.progressbar()
-wifibar:set_width(60)
-wifibar:set_height(10)
-wifibar:set_max_value(1)
-wifibar:set_background_color(beautiful.bg_normal)
-wifibar:set_border_color(beautiful.widget_label)
-wifibar:set_color(beautiful.widget_data)
-awful.widget.layout.margins[wifibar.widget] = { top = 4 }
-essidtext = widget({ type="textbox" })
-vicious.register(wifibar, vicious.widgets.wifi,
-    function (widget, args)
-        if args["{ssid}"] == "N/A" or args["{link}"] == 0 then
-            essidtext.text = ""
-            return 0
-        else
-            essidtext.text = " (" .. pangoify("fgcolor", beautiful.widget_data, args["{ssid}"]) .. ")"
-            wifitooltip:set_text(args["{link}"] .. "/70")
-            return args["{link}"]
-        end
-    end,
-7, "wlan0")
-
-wifitooltip:add_to_object( wifibar.widget )
 
 uptext = widget({ type = "textbox" })
 uptext.text = "UP "
@@ -304,7 +292,6 @@ upgraph = awful.widget.graph()
 upgraph:set_width(60)
 upgraph:set_height(10)
 upgraph:set_background_color(beautiful.bg_normal)
-upgraph:set_border_color(beautiful.widget_label)
 upgraph:set_color(beautiful.widget_data)
 awful.widget.layout.margins[upgraph.widget] = { top = 4 }
 vicious.register(upgraph, vicious.widgets.net, 
@@ -320,7 +307,6 @@ downgraph = awful.widget.graph()
 downgraph:set_width(60)
 downgraph:set_height(10)
 downgraph:set_background_color(beautiful.bg_normal)
-downgraph:set_border_color(beautiful.widget_label)
 downgraph:set_color(beautiful.widget_data)
 awful.widget.layout.margins[downgraph.widget] = { top = 4 }
 vicious.register(downgraph, vicious.widgets.net, 
@@ -328,6 +314,38 @@ vicious.register(downgraph, vicious.widgets.net,
             return args["{wlan0 down_kb}"]
     end,
 3)
+
+wifitext = widget({ type = "textbox" })
+wifitext.text = "WIFI "
+
+wifibar = awful.widget.progressbar()
+wifibar:set_width(60)
+wifibar:set_height(10)
+wifibar:set_max_value(1)
+wifibar:set_background_color(beautiful.bg_normal)
+wifibar:set_color(beautiful.widget_data)
+awful.widget.layout.margins[wifibar.widget] = { top = 4 }
+essidtext = widget({ type="textbox" })
+vicious.register(wifibar, vicious.widgets.wifi,
+    function (widget, args)
+        if args["{ssid}"] == "N/A" or args["{link}"] == 0 then
+            essidtext.text = ""
+            wifibar:set_border_color(beautiful.widget_urgent)
+            upgraph:set_border_color(beautiful.widget_urgent)
+            downgraph:set_border_color(beautiful.widget_urgent)
+            return 0
+        else
+            essidtext.text = " (" .. pangoify("fgcolor", beautiful.widget_data, args["{ssid}"]) .. ")"
+            wifitooltip:set_text(args["{link}"] .. "/70")
+            wifibar:set_border_color(beautiful.widget_label)
+            upgraph:set_border_color(beautiful.widget_label)
+            downgraph:set_border_color(beautiful.widget_label)
+            return args["{link}"]
+        end
+    end,
+7, "wlan0")
+
+wifitooltip:add_to_object( wifibar.widget )
 
 netwidget = { downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator, layout = awful.widget.layout.horizontal.rightleft }
 

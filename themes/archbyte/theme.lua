@@ -1,4 +1,4 @@
--- archlinux --
+-- ArchByte --
 theme = {}
 
 theme.font          = "sans 8"
