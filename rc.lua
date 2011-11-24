@@ -206,7 +206,8 @@ vicious.register(batbar, vicious.widgets.bat,
                 widget:set_color(beautiful.widget_data)
             end
         else
-            widget:set_color(beautiful.arch_green)
+            widget:set_color(beautiful.widget_data)
+            widget:set_border_color(beautiful.arch_green)
         end
 
         -- create tooltip
