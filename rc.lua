@@ -27,6 +27,22 @@ editor_cmd = terminal .. " -e " .. editor
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
+-- set naughty default configuration
+naughty.config.default_preset.timeout       = 5
+naughty.config.default_preset.screen        = 1
+naughty.config.default_preset.position      = "bottom_right"
+naughty.config.default_preset.margin        = 4
+naughty.config.default_preset.gap           = 1
+naughty.config.default_preset.ontop         = true
+naughty.config.default_preset.font          = beautiful.font
+naughty.config.default_preset.icon          = nil
+naughty.config.default_preset.icon_size     = 16
+naughty.config.default_preset.fg            = beautiful.naughty_fg
+naughty.config.default_preset.bg            = beautiful.naughty_bg
+naughty.config.default_preset.border_color  = beautiful.naughty_border
+naughty.config.default_preset.border_width  = 1
+naughty.config.default_preset.hover_timeout = nil
+
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
@@ -102,7 +118,7 @@ function add_calendar(inc_offset)
    cal = string.gsub(cal, "^%s*(.-)%s*$", "%1")
    calendar = naughty.notify({
       text = string.format('<span font_desc="%s">%s</span>', "monospace", cal),
-      timeout = 0, hover_timeout = 0.5,
+      position = "top_right", timeout = 0, hover_timeout = 0.5,
       width = 160
    })
 end
@@ -225,18 +241,10 @@ battooltip:add_to_object( batbar.widget )
 batwidget = { battext, batbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- cpu widget
-cpubuttons = awful.util.table.join(
-      awful.button({ }, 1,
-         function()
-            --naughty.notify({ text="hello world", timeout=0 })
-         end)
-      )
-
 vicious.cache(vicious.widgets.cpu)
 
 cputext = widget({ type = "textbox" })
 cputext.text = "CPU "
---cputext:buttons(cpubuttons)
 
 cpugraph = awful.widget.graph()
 cpugraph:set_width(60)
@@ -246,7 +254,6 @@ cpugraph:set_border_color(beautiful.widget_label)
 cpugraph:set_color(beautiful.widget_data)
 awful.widget.layout.margins[cpugraph.widget] = { top = 4 }
 vicious.register(cpugraph, vicious.widgets.cpu, "$1", 7)
---cpugraph:buttons(cpubuttons)
 
 cpufreq = widget({ type = "textbox" })
 vicious.register(cpufreq, vicious.widgets.cpufreq,
@@ -258,63 +265,36 @@ vicious.register(cpufreq, vicious.widgets.cpufreq,
          end
       end,
 7, "cpu0")
---cpufreq:buttons(cpubuttons)
 
 cpuwidget = { cputext, cpugraph.widget, spacer, cpufreq, layout = awful.widget.layout.horizontal.leftright }
 
 -- volume widget
 voltext = widget({ type = "textbox" })
---volicon = widget({ type = "imagebox" })
---vicious.register(voltext, vicious.widgets.volume, "$1", 3, 'Master')
---    function (widget, args)
---        if args[2] == "" then
---            volicon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/vol_on.png")
---            return "" .. args[1] .. "% "
---        else
---            volicon.image = image(awful.util.getdir("config") .. "/themes/archlinux/icons/vol_muted.png")
---            return "--  "
---        end
---    end,
---vicious.unregister(voltext, true)
+voltext.text = "VOL "
+
+volbar = awful.widget.progressbar()
+volbar:set_width(60)
+volbar:set_height(10)
+volbar:set_background_color(beautiful.bg_normal)
+volbar:set_color(beautiful.widget_data)
+awful.widget.layout.margins[volbar.widget] = { top = 4 }
+vicious.register(volbar, vicious.widgets.volume, 
+    function (widget, args)
+        if args[2] == "♫" then
+            widget:set_border_color(beautiful.widget_urgent)
+            return 0
+        else
+            widget:set_border_color(beautiful.widget_border)
+            return args[1]
+        end
+    end,
+2, "Master")
+vicious.unregister(volbar, true)
+
+volwidget = { voltext, volbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- net widget
-netbuttons = awful.util.table.join(
-      awful.button({ }, 1,
-         function()
-         end)
-      )
-
 wifitooltip = awful.tooltip({ })
-
-uptext = widget({ type = "textbox" })
-uptext.text = "UP "
-
-upgraph = awful.widget.graph()
-upgraph:set_width(60)
-upgraph:set_height(10)
-upgraph:set_background_color(beautiful.bg_normal)
-upgraph:set_color(beautiful.widget_data)
-awful.widget.layout.margins[upgraph.widget] = { top = 4 }
-vicious.register(upgraph, vicious.widgets.net, 
-    function (widget, args)
-            return args["{wlan0 up_kb}"]
-    end,
-3)
-
-downtext = widget({ type = "textbox" })
-downtext.text = "DOWN "
-
-downgraph = awful.widget.graph()
-downgraph:set_width(60)
-downgraph:set_height(10)
-downgraph:set_background_color(beautiful.bg_normal)
-downgraph:set_color(beautiful.widget_data)
-awful.widget.layout.margins[downgraph.widget] = { top = 4 }
-vicious.register(downgraph, vicious.widgets.net, 
-    function (widget, args)
-            return args["{wlan0 down_kb}"]
-    end,
-3)
 
 wifitext = widget({ type = "textbox" })
 wifitext.text = "WIFI "
@@ -345,8 +325,39 @@ vicious.register(wifibar, vicious.widgets.wifi,
         end
     end,
 7, "wlan0")
-
 wifitooltip:add_to_object( wifibar.widget )
+
+
+
+uptext = widget({ type = "textbox" })
+uptext.text = "UP "
+
+upgraph = awful.widget.graph()
+upgraph:set_width(60)
+upgraph:set_height(10)
+upgraph:set_background_color(beautiful.bg_normal)
+upgraph:set_color(beautiful.widget_data)
+awful.widget.layout.margins[upgraph.widget] = { top = 4 }
+vicious.register(upgraph, vicious.widgets.net, 
+    function (widget, args)
+            return args["{wlan0 up_kb}"]
+    end,
+3)
+
+downtext = widget({ type = "textbox" })
+downtext.text = "DOWN "
+
+downgraph = awful.widget.graph()
+downgraph:set_width(60)
+downgraph:set_height(10)
+downgraph:set_background_color(beautiful.bg_normal)
+downgraph:set_color(beautiful.widget_data)
+awful.widget.layout.margins[downgraph.widget] = { top = 4 }
+vicious.register(downgraph, vicious.widgets.net, 
+    function (widget, args)
+            return args["{wlan0 down_kb}"]
+    end,
+3)
 
 netwidget = { downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator, layout = awful.widget.layout.horizontal.rightleft }
 
@@ -380,7 +391,6 @@ for s = 1, screen.count() do
         mylayoutbox[s],
         mytextclock,
         s == 1 and mysystray or nil,
-        --voltext,-- volicon, spacer, 
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -395,6 +405,7 @@ for s = 1, screen.count() do
        {
           separator, cpuwidget,
           separator, batwidget,
+          separator, volwidget,
           separator, mypromptbox[s],
           layout = awful.widget.layout.horizontal.leftright
        },
@@ -476,18 +487,18 @@ globalkeys = awful.util.table.join(
     -- Multimedia / extra
     awful.key({},                    "XF86AudioMute", 
         function ()
-            awful.util.spawn_with_shell("amixer set Master toggle")
-            vicious.force({ voltext })
+            awful.util.spawn_with_shell("amixer -q set Master toggle")
+            vicious.force({ volbar })
         end),
     awful.key({},                    "XF86AudioLowerVolume",
         function ()
-            awful.util.spawn_with_shell("amixer set Master playback 2%-")
-            vicious.force({ voltext })
+            awful.util.spawn_with_shell("amixer -q set Master 2%-")
+            vicious.force({ volbar })
         end),
     awful.key({},                    "XF86AudioRaiseVolume",
         function ()
-            awful.util.spawn_with_shell("amixer set Master playback 2%+")
-            vicious.force({ voltext })
+            awful.util.spawn_with_shell("amixer -q set Master 2%+")
+            vicious.force({ volbar })
         end),
 
     -- Shortcuts
