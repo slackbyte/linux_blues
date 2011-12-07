@@ -1,4 +1,4 @@
--- ArchByte --
+-- archbyte --
 theme = {}
 
 theme.font          = "sans 8"
@@ -23,14 +23,24 @@ theme.fg_focus      = theme.arch_blue
 theme.fg_urgent     = theme.arch_white
 theme.fg_minimize   = theme.arch_white
 
-theme.widget_label = theme.arch_white
-theme.widget_data  = theme.arch_blue
-theme.widget_urgent= theme.arch_red
-
-theme.border_width  = "1"
+-- border settings
 theme.border_normal = theme.arch_darkgrey
 theme.border_focus  = theme.arch_darkblue
 theme.border_marked = theme.arch_darkred
+theme.border_width  = "1"
+
+-- widget colors
+theme.widget_label  = theme.arch_white
+theme.widget_data   = theme.arch_blue
+theme.widget_urgent = theme.arch_red
+theme.widget_border  = theme.arch_white
+
+-- naughty colors
+theme.naughty_fg    = theme.arch_white
+theme.naughty_bg    = theme.arch_black
+theme.naughty_border= theme.border_focus
+theme.naughty_title = theme.naughty_fg
+theme.naughty_text  = theme.widget_field
 
 theme.taglist_bg_focus = theme.bg_focus
 theme.taglist_fg_focus = theme.widget_field

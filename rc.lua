@@ -205,7 +205,6 @@ batbar:set_border_color(beautiful.widget_label)
 awful.widget.layout.margins[batbar.widget] = { top = 4 }
 vicious.register(batbar, vicious.widgets.bat, 
     function (widget, args)
-        -- 
         if args[1] ~= "+" then
             if args[2] <= 10 then
                 widget:set_color(beautiful.widget_urgent)
@@ -281,11 +280,11 @@ awful.widget.layout.margins[volbar.widget] = { top = 4 }
 vicious.register(volbar, vicious.widgets.volume, 
     function (widget, args)
         if args[2] == "♫" then
-            widget:set_border_color(beautiful.widget_urgent)
-            return 0
-        else
             widget:set_border_color(beautiful.widget_border)
             return args[1]
+        else
+            widget:set_border_color(beautiful.widget_urgent)
+            return 0
         end
     end,
 2, "Master")
