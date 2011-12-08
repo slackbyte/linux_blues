@@ -237,7 +237,7 @@ vicious.register(batbar, vicious.widgets.bat,
 29, "BAT0")
 
 battooltip:add_to_object( batbar.widget )
-batwidget = { battext, batbar.widget, layout = awful.widget.layout.horizontal.leftright }
+--batwidget = { battext, batbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- cpu widget
 vicious.cache(vicious.widgets.cpu)
@@ -265,7 +265,7 @@ vicious.register(cpufreq, vicious.widgets.cpufreq,
       end,
 7, "cpu0")
 
-cpuwidget = { cputext, cpugraph.widget, spacer, cpufreq, layout = awful.widget.layout.horizontal.leftright }
+--cpuwidget = { cputext, cpugraph.widget, spacer, cpufreq, layout = awful.widget.layout.horizontal.leftright }
 
 -- volume widget
 voltext = widget({ type = "textbox" })
@@ -290,7 +290,7 @@ vicious.register(volbar, vicious.widgets.volume,
 2, "Master")
 vicious.unregister(volbar, true)
 
-volwidget = { voltext, volbar.widget, layout = awful.widget.layout.horizontal.leftright }
+--volwidget = { voltext, volbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- net widget
 wifitooltip = awful.tooltip({ })
@@ -326,8 +326,6 @@ vicious.register(wifibar, vicious.widgets.wifi,
 7, "wlan0")
 wifitooltip:add_to_object( wifibar.widget )
 
-
-
 uptext = widget({ type = "textbox" })
 uptext.text = "UP "
 
@@ -358,7 +356,7 @@ vicious.register(downgraph, vicious.widgets.net,
     end,
 3)
 
-netwidget = { downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator, layout = awful.widget.layout.horizontal.rightleft }
+--netwidget = { downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, layout = awful.widget.layout.horizontal.rightleft }
 
 
 for s = 1, screen.count() do
@@ -402,19 +400,17 @@ for s = 1, screen.count() do
 
     bottomwibox[s].widgets = {
        {
-          separator, cpuwidget,
-          separator, batwidget,
-          separator, volwidget,
+          separator, cputext, cpugraph.widget, spacer, cpufreq, --cpuwidget, 
+          separator, battext, batbar.widget, --batwidget,
+          separator, voltext, volbar.widget, --volwidget,
           separator, mypromptbox[s],
           layout = awful.widget.layout.horizontal.leftright
        },
-       separator, netwidget,
+       separator,  downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator, --netwidget, separator,
        layout = awful.widget.layout.horizontal.rightleft
     }
 end
 -- }}}
-
-
 
 
 -- {{{ Mouse bindings
