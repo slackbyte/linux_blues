@@ -66,7 +66,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
-   tags[s] = awful.tag( { "⚀", "⚁", "⚂", "⚃", "⚄", "⚅", "⚈", "⚉", "▪" }, s, layouts[6])
+   tags[s] = awful.tag( { "⚀", "⚁", "⚂", "⚃", "⚄", "⚅", }, s, layouts[6]) -- removed icons: "⚈", "⚉", "▪" 
 end
 -- }}}
 
@@ -190,6 +190,34 @@ spacer.text = " "
 separator = widget({ type = "textbox" })
 separator.text = pangoify("fgcolor", theme.arch_grey, " :: ")
 
+
+-- cpu widget
+vicious.cache(vicious.widgets.cpu)
+
+cputext = widget({ type = "textbox" })
+cputext.text = "CPU "
+
+cpugraph = awful.widget.graph()
+cpugraph:set_width(60)
+cpugraph:set_height(10)
+cpugraph:set_background_color(beautiful.bg_normal)
+cpugraph:set_border_color(beautiful.widget_label)
+cpugraph:set_color(beautiful.widget_data)
+awful.widget.layout.margins[cpugraph.widget] = { top = 4 }
+vicious.register(cpugraph, vicious.widgets.cpu, "$1", 7)
+
+cpufreq = widget({ type = "textbox" })
+vicious.register(cpufreq, vicious.widgets.cpufreq,
+      function (widget, args)
+         if args[1] < 1000 then
+            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[1] .. " MHz") .. ") "
+         else
+            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[2] .. " GHz") .. ")"
+         end
+      end,
+7, "cpu0")
+
+
 -- battery widget
 battext = widget({ type = "textbox" })
 battext.text = "BAT "
@@ -237,35 +265,7 @@ vicious.register(batbar, vicious.widgets.bat,
 29, "BAT0")
 
 battooltip:add_to_object( batbar.widget )
---batwidget = { battext, batbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
--- cpu widget
-vicious.cache(vicious.widgets.cpu)
-
-cputext = widget({ type = "textbox" })
-cputext.text = "CPU "
-
-cpugraph = awful.widget.graph()
-cpugraph:set_width(60)
-cpugraph:set_height(10)
-cpugraph:set_background_color(beautiful.bg_normal)
-cpugraph:set_border_color(beautiful.widget_label)
-cpugraph:set_color(beautiful.widget_data)
-awful.widget.layout.margins[cpugraph.widget] = { top = 4 }
-vicious.register(cpugraph, vicious.widgets.cpu, "$1", 7)
-
-cpufreq = widget({ type = "textbox" })
-vicious.register(cpufreq, vicious.widgets.cpufreq,
-      function (widget, args)
-         if args[1] < 1000 then
-            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[1] .. " MHz") .. ") "
-         else
-            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[2] .. " GHz") .. ")"
-         end
-      end,
-7, "cpu0")
-
---cpuwidget = { cputext, cpugraph.widget, spacer, cpufreq, layout = awful.widget.layout.horizontal.leftright }
 
 -- volume widget
 voltext = widget({ type = "textbox" })
@@ -290,7 +290,6 @@ vicious.register(volbar, vicious.widgets.volume,
 2, "Master")
 vicious.unregister(volbar, true)
 
---volwidget = { voltext, volbar.widget, layout = awful.widget.layout.horizontal.leftright }
 
 -- net widget
 wifitooltip = awful.tooltip({ })
@@ -356,8 +355,6 @@ vicious.register(downgraph, vicious.widgets.net,
     end,
 3)
 
---netwidget = { downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, layout = awful.widget.layout.horizontal.rightleft }
-
 
 for s = 1, screen.count() do
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
@@ -400,13 +397,13 @@ for s = 1, screen.count() do
 
     bottomwibox[s].widgets = {
        {
-          separator, cputext, cpugraph.widget, spacer, cpufreq, --cpuwidget, 
-          separator, battext, batbar.widget, --batwidget,
-          separator, voltext, volbar.widget, --volwidget,
+          separator, cputext, cpugraph.widget, spacer, cpufreq,
+          separator, battext, batbar.widget,
+          separator, voltext, volbar.widget,
           separator, mypromptbox[s],
           layout = awful.widget.layout.horizontal.leftright
        },
-       separator,  downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator, --netwidget, separator,
+       separator,  downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator,
        layout = awful.widget.layout.horizontal.rightleft
     }
 end
