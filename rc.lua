@@ -66,7 +66,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
    -- Each screen has its own tag table.
-   tags[s] = awful.tag( { "⚀", "⚁", "⚂", "⚃", "⚄", "⚅", }, s, layouts[6]) -- removed icons: "⚈", "⚉", "▪" 
+   tags[s] = awful.tag( { "⚀", "⚁", "⚂", "⚃", "⚄", "⚅", }, s, layouts[2]) -- removed icons: "⚈", "⚉", "▪" 
 end
 -- }}}
 
@@ -229,11 +229,11 @@ batbar:set_width(60)
 batbar:set_height(10)
 batbar:set_max_value(1)
 batbar:set_background_color(beautiful.bg_normal)
-batbar:set_border_color(beautiful.widget_label)
 awful.widget.layout.margins[batbar.widget] = { top = 4 }
 vicious.register(batbar, vicious.widgets.bat, 
     function (widget, args)
         if args[1] ~= "+" then
+            widget:set_border_color(beautiful.widget_label)
             if args[2] <= 10 then
                 widget:set_color(beautiful.widget_urgent)
                 naughty.notify({
@@ -604,7 +604,7 @@ awful.rules.rules = {
 
     { rule = { class = "XTerm" },
       properties = { opacity = 0.75, size_hints_honor = false } },
-    { rule = { class = "google-chrome" },
+    { rule = { class = "chromium" },
       properties = { maximized_vertical = true, maximized_horizontal = true } }
 }
 -- }}}
