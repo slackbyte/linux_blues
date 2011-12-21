@@ -28,6 +28,8 @@ INSTALLATION:
 KEYBOAD SHORTCUTS:
     - modkey + i
         launches default browser (requires $BROWSER to be defined)
+    - modkey + CTRL + r
+        restart awesome (remapped from modkey+Shift+r)
     - modkey + [
         decrease focused client's opacity
     - modkey + ]
