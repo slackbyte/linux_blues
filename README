@@ -36,6 +36,11 @@ DEPENDENCIES:
     - vicious (http://git.sysphere.org/vicious/)
     - eminent (http://git.glacicle.org/eminent)
         - or you can just delete the line in rc.lua that says require("eminent")
+    - [OPTIONAL] xcompmgr for window transparency support
+        - xcompmgr is available in the "extra" Arch repository
+        - also, you will need to run it at startup by adding "xcompmgr &" to your 
+          xinitrc file before the line "exec awesome"
+          - your xinitrc file can usually be found at either ~/.xinitrc or /etc/X11/xinit/xinitrc
 
 INSTALLATION:
     - you can download awesome from the Arch User Repository (AUR), or you can find several
