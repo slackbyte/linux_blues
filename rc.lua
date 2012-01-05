@@ -255,21 +255,22 @@ vicious.register(batbar, vicious.widgets.bat,
 
         -- create tooltip
         if args[3] ~= "N/A" then
-            battooltip:set_text( args[3] .. " (" .. args[2] .. "%)" )
+            battooltip:set_text( " " .. args[3] .. " (" .. args[2] .. "%) " )
         else
-            battooltip:set_text( "(" .. args[2] .. "%)" )
+            battooltip:set_text( " " .. args[2] .. "% " )
         end
 
         return args[2]
     end,
 29, "BAT0")
-
 battooltip:add_to_object( batbar.widget )
 
 
 -- volume widget
 voltext = widget({ type = "textbox" })
 voltext.text = "VOL "
+
+voltooltip = awful.tooltip({ })
 
 volbar = awful.widget.progressbar()
 volbar:set_width(60)
@@ -281,17 +282,20 @@ vicious.register(volbar, vicious.widgets.volume,
     function (widget, args)
         if args[2] == "♫" then
             widget:set_border_color(beautiful.widget_border)
+            voltooltip:set_text( " " .. args[1] .. "% " )
             return args[1]
         else
             widget:set_border_color(beautiful.widget_urgent)
+            voltooltip:set_text( " muted " )
             return 0
         end
     end,
 2, "Master")
 vicious.unregister(volbar, true)
+voltooltip:add_to_object( volbar.widget )
 
 
--- net widget
+-- net widgets
 wifitooltip = awful.tooltip({ })
 
 wifitext = widget({ type = "textbox" })
@@ -315,7 +319,7 @@ vicious.register(wifibar, vicious.widgets.wifi,
             return 0
         else
             essidtext.text = " (" .. pangoify("fgcolor", beautiful.widget_data, args["{ssid}"]) .. ")"
-            wifitooltip:set_text(args["{link}"] .. "/70")
+            wifitooltip:set_text( " " .. args["{link}"] .. "/70 ")
             wifibar:set_border_color(beautiful.widget_label)
             upgraph:set_border_color(beautiful.widget_label)
             downgraph:set_border_color(beautiful.widget_label)
