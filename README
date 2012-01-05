@@ -8,24 +8,15 @@ DESCRIPTION:
     Although I consider myself to be a power user, ArchByte is created with the 
     average Linux user in mind. My goal is for both the power user and average user to feel right at home.
 
-DEPENDENCIES:
-    - vicious (http://git.sysphere.org/vicious/)
-    - eminent (http://git.glacicle.org/eminent)
-        - or you can just delete the line in rc.lua that says require("eminent")
-    - git (for installation)
+FEATURES:
+    - Clean, minimal interface
+    - Dynamic widgets
+        - Colors change to reflect current state
+        - Mouse over to reveal more information
+    - Support for dynamic control of window transparency
+    - I am constantly adding things when I have more ideas and I am very open to suggestions!
 
-INSTALLATION:
-    - if the awesome window manager is not in your distribution's repositories, you can find several
-      package formats and the source code on awesome's website (linked above).
-    - once awesome is installed, create a directory in your home folder called .config/awesome
-      (if .config does not already exist, it will have to be created first)
-    - to install ArchByte, enter the following commands in a terminal:
-        cd %HOME/.config/awesome
-        git clone git://github.com/slackbyte/ArchByte.git
-    - if awesome is currently running, it will have to be restarted (shortcut: Mod4+CTRL+r)
-    - celebrate your success in installing ArchByte in whatever way you are accustomed
-
-KEYBOAD SHORTCUTS:
+CUSTOM KEYBOAD SHORTCUTS:
     - modkey + i
         launches default browser (requires $BROWSER to be defined)
     - modkey + Control + r
@@ -41,7 +32,24 @@ KEYBOAD SHORTCUTS:
     - modkey + Shift + ]
         set focused client's opacity to the maximum (shortcut)
 
+DEPENDENCIES:
+    - vicious (http://git.sysphere.org/vicious/)
+    - eminent (http://git.glacicle.org/eminent)
+        - or you can just delete the line in rc.lua that says require("eminent")
+
+INSTALLATION:
+    - you can download awesome from the Arch User Repository (AUR), or you can find several
+      package formats and the source code on awesome's website (linked above).
+    - once awesome is installed, create a directory in your home folder called .config/awesome
+      (if .config does not already exist, it will have to be created first)
+    - to install ArchByte, enter the following commands in a terminal:
+        cd $HOME/.config/awesome
+        git clone git://github.com/slackbyte/ArchByte.git
+    - if awesome is currently running, it will have to be restarted (shortcut: Mod4+Shift+r)
+    - celebrate your success in installing ArchByte in whatever way you are accustomed
+
 CHANGE LOG:
+    [Dec 17] fixed bug with the border for the battery widget not changing its color properly
     [Dec 07] fixed problem where widgets were not showing up
     [Nov 29] added volume widget back in
     [Nov 23] added tooltips to wifi and battery progressbar to display more information on mouseover
@@ -51,11 +59,11 @@ CHANGE LOG:
 TODO (in order of priority):
     - fix volume widget confliction that causes X to crash
     - change font
-    - add mouse-over tooltips to widgets (possibly using naughty)
+    - add mouse-over tooltips to widgets (possibly using naughty) [WIP]
         - mousing over CPU widget will display a list of the status of all individual cpus
         - more is planned and even more will be created
-    - add naughty support
-        - integrate common applications with naughty
+    - add naughty support [WIP]
+        - integrate common applications with naughty through dbus
     - much more is constantly being added! If you have an idea, don't hesitate to suggest it!
 
 
