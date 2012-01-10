@@ -37,9 +37,9 @@ naughty.config.default_preset.ontop         = true
 naughty.config.default_preset.font          = beautiful.font
 naughty.config.default_preset.icon          = nil
 naughty.config.default_preset.icon_size     = 16
-naughty.config.default_preset.fg            = beautiful.naughty_fg
-naughty.config.default_preset.bg            = beautiful.naughty_bg
-naughty.config.default_preset.border_color  = beautiful.naughty_border
+naughty.config.default_preset.fg            = beautiful.fg_normal
+naughty.config.default_preset.bg            = beautiful.bg_normal
+naughty.config.default_preset.border_color  = beautiful.border_focus
 naughty.config.default_preset.border_width  = 1
 naughty.config.default_preset.hover_timeout = nil
 
@@ -201,8 +201,8 @@ cpugraph = awful.widget.graph()
 cpugraph:set_width(60)
 cpugraph:set_height(10)
 cpugraph:set_background_color(beautiful.bg_normal)
-cpugraph:set_border_color(beautiful.widget_label)
-cpugraph:set_color(beautiful.widget_data)
+cpugraph:set_border_color(beautiful.fg_normal)
+cpugraph:set_color(beautiful.fg_focus)
 awful.widget.layout.margins[cpugraph.widget] = { top = 4 }
 vicious.register(cpugraph, vicious.widgets.cpu, "$1", 7)
 
@@ -210,9 +210,9 @@ cpufreq = widget({ type = "textbox" })
 vicious.register(cpufreq, vicious.widgets.cpufreq,
       function (widget, args)
          if args[1] < 1000 then
-            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[1] .. " MHz") .. ") "
+            return "(" .. pangoify("fgcolor", beautiful.fg_focus, args[1] .. " MHz") .. ") "
          else
-            return "(" .. pangoify("fgcolor", beautiful.widget_data, args[2] .. " GHz") .. ")"
+            return "(" .. pangoify("fgcolor", beautiful.fg_focus, args[2] .. " GHz") .. ")"
          end
       end,
 7, "cpu0")
@@ -233,24 +233,24 @@ awful.widget.layout.margins[batbar.widget] = { top = 4 }
 vicious.register(batbar, vicious.widgets.bat, 
     function (widget, args)
         if args[1] ~= "+" then
-            widget:set_border_color(beautiful.widget_label)
+            widget:set_border_color(beautiful.fg_normal)
             if args[2] <= 10 then
-                widget:set_color(beautiful.widget_urgent)
+                widget:set_color(beautiful.bg_urgent)
                 naughty.notify({
                     title = "BATTERY:",
                     text = args[2] .. "%",
                     position = "bottom_left",
                     timeout = 28,
-                    fg = beautiful.widget_urgent,
+                    fg = beautiful.bg_urgent,
                     screen = 1,
                     ontop = true
                 })
             else
-                widget:set_color(beautiful.widget_data)
+                widget:set_color(beautiful.fg_focus)
             end
         else
-            widget:set_color(beautiful.widget_data)
-            widget:set_border_color(beautiful.arch_green)
+            widget:set_color(beautiful.fg_focus)
+            widget:set_border_color("#16D016")
         end
 
         -- create tooltip
@@ -276,16 +276,16 @@ volbar = awful.widget.progressbar()
 volbar:set_width(60)
 volbar:set_height(10)
 volbar:set_background_color(beautiful.bg_normal)
-volbar:set_color(beautiful.widget_data)
+volbar:set_color(beautiful.fg_focus)
 awful.widget.layout.margins[volbar.widget] = { top = 4 }
 vicious.register(volbar, vicious.widgets.volume, 
     function (widget, args)
         if args[2] == "♫" then
-            widget:set_border_color(beautiful.widget_border)
+            widget:set_border_color(beautiful.fg_normal)
             voltooltip:set_text( " " .. args[1] .. "% " )
             return args[1]
         else
-            widget:set_border_color(beautiful.widget_urgent)
+            widget:set_border_color(beautiful.bg_urgent)
             voltooltip:set_text( " muted " )
             return 0
         end
@@ -306,23 +306,23 @@ wifibar:set_width(60)
 wifibar:set_height(10)
 wifibar:set_max_value(1)
 wifibar:set_background_color(beautiful.bg_normal)
-wifibar:set_color(beautiful.widget_data)
+wifibar:set_color(beautiful.fg_focus)
 awful.widget.layout.margins[wifibar.widget] = { top = 4 }
 essidtext = widget({ type="textbox" })
 vicious.register(wifibar, vicious.widgets.wifi,
     function (widget, args)
         if args["{ssid}"] == "N/A" or args["{link}"] == 0 then
             essidtext.text = ""
-            wifibar:set_border_color(beautiful.widget_urgent)
-            upgraph:set_border_color(beautiful.widget_urgent)
-            downgraph:set_border_color(beautiful.widget_urgent)
+            wifibar:set_border_color(beautiful.bg_urgent)
+            upgraph:set_border_color(beautiful.bg_urgent)
+            downgraph:set_border_color(beautiful.bg_urgent)
             return 0
         else
-            essidtext.text = " (" .. pangoify("fgcolor", beautiful.widget_data, args["{ssid}"]) .. ")"
+            essidtext.text = " (" .. pangoify("fgcolor", beautiful.fg_focus, args["{ssid}"]) .. ")"
             wifitooltip:set_text( " " .. args["{link}"] .. "/70 ")
-            wifibar:set_border_color(beautiful.widget_label)
-            upgraph:set_border_color(beautiful.widget_label)
-            downgraph:set_border_color(beautiful.widget_label)
+            wifibar:set_border_color(beautiful.fg_normal)
+            upgraph:set_border_color(beautiful.fg_normal)
+            downgraph:set_border_color(beautiful.fg_normal)
             return args["{link}"]
         end
     end,
@@ -336,7 +336,7 @@ upgraph = awful.widget.graph()
 upgraph:set_width(60)
 upgraph:set_height(10)
 upgraph:set_background_color(beautiful.bg_normal)
-upgraph:set_color(beautiful.widget_data)
+upgraph:set_color(beautiful.fg_focus)
 awful.widget.layout.margins[upgraph.widget] = { top = 4 }
 vicious.register(upgraph, vicious.widgets.net, 
     function (widget, args)
@@ -351,7 +351,7 @@ downgraph = awful.widget.graph()
 downgraph:set_width(60)
 downgraph:set_height(10)
 downgraph:set_background_color(beautiful.bg_normal)
-downgraph:set_color(beautiful.widget_data)
+downgraph:set_color(beautiful.fg_focus)
 awful.widget.layout.margins[downgraph.widget] = { top = 4 }
 vicious.register(downgraph, vicious.widgets.net, 
     function (widget, args)
@@ -498,8 +498,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Shortcuts
-    awful.key({ modkey },            "i",      function () awful.util.spawn(os.getenv("BROWSER")) end)
-)
+    awful.key({ modkey },            "i",      function () awful.util.spawn(os.getenv("BROWSER")) end))
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
@@ -539,7 +538,20 @@ clientkeys = awful.util.table.join(
             c.redraw()
         end),
     awful.key({ modkey, "Shift"   }, "]", function (c) c.opacity = 1.00 end),
-    awful.key({ modkey, "Shift"   }, "[", function (c) c.opacity = 0.05 end)
+    awful.key({ modkey, "Shift"   }, "[", function (c) c.opacity = 0.05 end),
+
+    awful.key({ modkey }, "b",
+        function ()
+            if topwibox[mouse.screen].visible then
+                vicious.suspend()
+                topwibox[mouse.screen].visible = false
+                bottomwibox[mouse.screen].visible = false
+            else
+                vicious.activate()
+                topwibox[mouse.screen].visible = true
+                bottomwibox[mouse.screen].visible = true
+            end
+        end)
 )
 
 -- Compute the maximum number of digit we need, limited to 9

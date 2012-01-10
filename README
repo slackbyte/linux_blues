@@ -23,6 +23,8 @@ CUSTOM KEYBOAD SHORTCUTS:
         restart awesome (remapped from modkey+Shift+r)
     - modkey + Shift + r
         redraw focused client (remapped from modkey+Control+r)
+    - modkey + b
+        hide top and bottom wiboxes (status bars)
     - modkey + [
         decrease focused client's opacity
     - modkey + ]
@@ -54,6 +56,7 @@ INSTALLATION:
     - celebrate your success in installing ArchByte in whatever way you are accustomed
 
 CHANGE LOG:
+    [Jan 10] added key mapping to hide top and bottom wiboxes (modkey+b)
     [Dec 17] fixed bug with the border for the battery widget not changing its color properly
     [Dec 07] fixed problem where widgets were not showing up
     [Nov 29] added volume widget back in
