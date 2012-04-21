@@ -25,6 +25,8 @@ CUSTOM KEYBOAD SHORTCUTS:
         redraw focused client (remapped from modkey+Control+r)
     - modkey + b
         hide top and bottom wiboxes (status bars)
+    - modkey + Shift + m
+        moves mouse to bottom right corner for mouseless working
     - modkey + [
         decrease focused client's opacity
     - modkey + ]
@@ -56,6 +58,7 @@ INSTALLATION:
     - celebrate your success in installing ArchByte in whatever way you are accustomed
 
 CHANGE LOG:
+    [Apr 20] added shortcut to move mouse out of the way... This project is not dead!
     [Jan 10] added key mapping to hide top and bottom wiboxes (modkey+b)
     [Dec 17] fixed bug with the border for the battery widget not changing its color properly
     [Dec 07] fixed problem where widgets were not showing up

@@ -16,7 +16,7 @@ require("eminent")
 beautiful.init(awful.util.getdir("config") .. "/themes/archbyte/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm -fg green -bg black"
+terminal = "xterm"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -90,6 +90,17 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- pangoify(attribute, value, text) = <span attribute="value">text</span>
 function pangoify (attribute, value, text)
    return "<span " .. attribute .. "=\"" .. value .. "\">" .. text .. "</span>"
+end
+
+-- Enable "hiding" of mouse
+local mouseIsVisible = true
+--local screenRes = io.popen("xrandr -q | grep -P '\s{2}\d{3,4}x\d{3,4}.+\+'")
+local screenWidth = 1366
+local screenHeight = 768
+local mouseRestoreLoc = { x = 0, y = 0 }
+
+function moveMouse (x_coord, y_coord)
+    mouse.coords({ x=x_coord, y=y_coord })
 end
 
 -- }}}
@@ -210,9 +221,9 @@ cpufreq = widget({ type = "textbox" })
 vicious.register(cpufreq, vicious.widgets.cpufreq,
       function (widget, args)
          if args[1] < 1000 then
-            return "(" .. pangoify("fgcolor", beautiful.fg_focus, args[1] .. " MHz") .. ") "
+            return pangoify("fgcolor", beautiful.fg_focus, args[1] .. " MHz")
          else
-            return "(" .. pangoify("fgcolor", beautiful.fg_focus, args[2] .. " GHz") .. ")"
+            return pangoify("fgcolor", beautiful.fg_focus, args[2] .. " GHz")
          end
       end,
 7, "cpu0")
@@ -298,8 +309,8 @@ voltooltip:add_to_object( volbar.widget )
 -- net widgets
 wifitooltip = awful.tooltip({ })
 
-wifitext = widget({ type = "textbox" })
-wifitext.text = "WIFI "
+networktext = widget({ type = "textbox" })
+networktext.text = "WIFI "
 
 wifibar = awful.widget.progressbar()
 wifibar:set_width(60)
@@ -407,7 +418,7 @@ for s = 1, screen.count() do
           separator, mypromptbox[s],
           layout = awful.widget.layout.horizontal.leftright
        },
-       separator,  downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, wifitext, separator,
+       separator,  downgraph.widget, downtext, separator, upgraph.widget, uptext, separator, essidtext, wifibar.widget, networktext, separator,
        layout = awful.widget.layout.horizontal.rightleft
     }
 end
@@ -540,6 +551,17 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "]", function (c) c.opacity = 1.00 end),
     awful.key({ modkey, "Shift"   }, "[", function (c) c.opacity = 0.05 end),
 
+    awful.key({ modkey, "Shift"   }, "m", 
+            function ()
+                if mouseIsVisible then
+                    mouseIsVisible = false
+                    moveMouse(screenWidth * 1.5, screenHeight * 1.5)
+                else
+                    moveMouse(screenWidth/2, screenHeight/2)
+                    mouseIsVisible = true
+                end
+            end),
+
     awful.key({ modkey }, "b",
         function ()
             if topwibox[mouse.screen].visible then
@@ -619,7 +641,7 @@ awful.rules.rules = {
       properties = { } },
 
     { rule = { class = "XTerm" },
-      properties = { opacity = 0.75, size_hints_honor = false } },
+      properties = { opacity = 0.80, size_hints_honor = false } },
     { rule = { class = "chromium" },
       properties = { maximized_vertical = true, maximized_horizontal = true } }
 }
