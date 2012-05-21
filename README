@@ -19,6 +19,8 @@ FEATURES:
 CUSTOM KEYBOAD SHORTCUTS:
     - modkey + i
         launches default browser (requires $BROWSER to be defined)
+    - modkey + Shift + i
+        launches secondary browser (requires $BROWSER2 to be defined)
     - modkey + Control + r
         restart awesome (remapped from modkey+Shift+r)
     - modkey + Shift + r

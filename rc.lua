@@ -509,7 +509,8 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Shortcuts
-    awful.key({ modkey },            "i",      function () awful.util.spawn(os.getenv("BROWSER")) end))
+    awful.key({ modkey },            "i",    function () awful.util.spawn(os.getenv("BROWSER")) end),
+    awful.key({ modkey, "Shift"   }, "i",    function () awful.util.spawn(os.getenv("BROWSER2")) end))
 
 clientkeys = awful.util.table.join(
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
