@@ -29,28 +29,9 @@ theme.border_focus  = theme.arch_darkblue
 theme.border_marked = theme.arch_darkred
 theme.border_width  = "1"
 
--- widget colors
-theme.widget_label  = theme.arch_white
-theme.widget_data   = theme.arch_blue
-theme.widget_urgent = theme.arch_red
-theme.widget_border  = theme.arch_white
-
--- naughty colors
-theme.naughty_fg    = theme.arch_white
-theme.naughty_bg    = theme.arch_black
-theme.naughty_border= theme.border_focus
-theme.naughty_title = theme.naughty_fg
-theme.naughty_text  = theme.widget_field
-
-theme.taglist_bg_focus = theme.bg_focus
-theme.taglist_fg_focus = theme.widget_field
-
-theme.tasklist_bg_focus = theme.bg_focus
-theme.tasklist_fg_focus = theme.widget_field
-
 theme.tooltip_opacity = .80
-theme.tooltip_fg_color = theme.widget_field
-theme.tooltip_bg_color = theme.arch_black
+theme.tooltip_fg_color = theme.fg_normal
+theme.tooltip_bg_color = theme.bg_normal
 theme.tooltip_border_width = 0
 
 -- There are other variable sets
