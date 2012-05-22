@@ -507,6 +507,7 @@ globalkeys = awful.util.table.join(
             awful.util.spawn_with_shell("amixer -q set Master 2%+")
             vicious.force({ volbar })
         end),
+    awful.key({}, "Print", function () awful.util.spawn_with_shell("import -window root /tmp/screenshot-$(date +%H%M%S).jpg") end),
 
     -- Shortcuts
     awful.key({ modkey },            "i",    function () awful.util.spawn(os.getenv("BROWSER")) end),
