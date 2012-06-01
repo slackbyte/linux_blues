@@ -5,13 +5,13 @@ awesome window manager: http://awesome.naquadah.org
 
 
 DESCRIPTION:
-    Although I consider myself to be a power user, ArchByte is created with the 
-    average Linux user in mind. My goal is for both the power user and average user to feel right at home.
+    Although I consider myself to be a power user, ArchByte is created with the average Linux
+    user in mind. My goal is for both the power user and average user to feel right at home.
 
 FEATURES:
     - Clean, minimal interface
     - Dynamic widgets
-        - Colors change to reflect current state
+        - Color feedback to reflect current state
         - Mouse over to reveal more information
     - Support for dynamic control of window transparency
     - I am constantly adding things when I have more ideas and I am very open to suggestions!
@@ -37,6 +37,7 @@ CUSTOM KEYBOAD SHORTCUTS:
         set focused client's opacity to the minimum (shortcut)
     - modkey + Shift + ]
         set focused client's opacity to the maximum (shortcut)
+    - Print Screen takes a screenshot and saves it in /tmp
 
 DEPENDENCIES:
     - vicious (http://git.sysphere.org/vicious/)
@@ -59,19 +60,9 @@ INSTALLATION:
     - if awesome is currently running, it will have to be restarted (shortcut: Mod4+Shift+r)
     - celebrate your success in installing ArchByte in whatever way you are accustomed
 
-CHANGE LOG:
-    [Apr 20] added shortcut to move mouse out of the way... This project is not dead!
-    [Jan 10] added key mapping to hide top and bottom wiboxes (modkey+b)
-    [Dec 17] fixed bug with the border for the battery widget not changing its color properly
-    [Dec 07] fixed problem where widgets were not showing up
-    [Nov 29] added volume widget back in
-    [Nov 23] added tooltips to wifi and battery progressbar to display more information on mouseover
-    [Nov 23] added dynamic coloring of battery and network widgets
-    [Nov 22] added keyboard shortcuts for controlling window opacity
-
 TODO (in order of priority):
-    - fix volume widget confliction that causes X to crash
-    - change font
+    - fix volume widget being a step behind when pulseaudio is installed
+    - change font (roboto?)
     - add mouse-over tooltips to widgets (possibly using naughty) [WIP]
         - mousing over CPU widget will display a list of the status of all individual cpus
         - more is planned and even more will be created
