@@ -61,7 +61,6 @@ INSTALLATION:
     - celebrate your success in installing ArchByte in whatever way you are accustomed
 
 TODO (in order of priority):
-    - fix volume widget being a step behind when pulseaudio is installed
     - change font (roboto?)
     - add mouse-over tooltips to widgets (possibly using naughty) [WIP]
         - mousing over CPU widget will display a list of the status of all individual cpus

@@ -501,10 +501,12 @@ globalkeys = awful.util.table.join(
         function ()
             awful.util.spawn_with_shell("amixer -q set Master 2%-")
             vicious.force({ volbar })
+            vicious.force({ volbar })
         end),
     awful.key({},                    "XF86AudioRaiseVolume",
         function ()
             awful.util.spawn_with_shell("amixer -q set Master 2%+")
+            vicious.force({ volbar })
             vicious.force({ volbar })
         end),
     awful.key({}, "Print", function () awful.util.spawn_with_shell("imlib2_grab /tmp/screenshot-$(date +%H%M%S).jpg") end),
