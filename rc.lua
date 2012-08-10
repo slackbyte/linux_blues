@@ -496,6 +496,7 @@ globalkeys = awful.util.table.join(
         function ()
             awful.util.spawn_with_shell("amixer -q set Master toggle")
             vicious.force({ volbar })
+            vicious.force({ volbar })
         end),
     awful.key({},                    "XF86AudioLowerVolume",
         function ()
