@@ -54,7 +54,6 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 
 -- set naughty presets
-naughty.config.padding = 25
 naughty.config.defaults =
 {
     timeout       = 5,
