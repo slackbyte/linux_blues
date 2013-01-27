@@ -1,11 +1,11 @@
----- ArchByte ----
-A minimalist, yet elegant configuration and theme for the awesome window manager on Arch Linux.
+---- linux_blues ----
+A minimalist, yet elegant configuration and theme for the awesome window manager (version 3.5).
 
 awesome window manager: http://awesome.naquadah.org
 
 
 DESCRIPTION:
-    Although I consider myself to be a power user, ArchByte is created with the average Linux
+    Although I consider myself to be a power user, linux_blues is created with the average Linux
     user in mind. My goal is for both the power user and average user to feel right at home.
 
 FEATURES:
@@ -42,32 +42,23 @@ CUSTOM KEYBOAD SHORTCUTS:
 DEPENDENCIES:
     - vicious (http://git.sysphere.org/vicious/)
     - eminent (http://git.glacicle.org/eminent)
-        - or you can just delete the line in rc.lua that says require("eminent")
+        - or you can just delete the line in rc.lua that says
+            eminent = require("eminent")
     - [OPTIONAL] xcompmgr for window transparency support
-        - xcompmgr is available in the "extra" Arch repository
         - also, you will need to run it at startup by adding "xcompmgr &" to your 
           xinitrc file before the line "exec awesome"
           - your xinitrc file can usually be found at either ~/.xinitrc or /etc/X11/xinit/xinitrc
 
 INSTALLATION:
-    - you can download awesome from the Arch User Repository (AUR), or you can find several
-      package formats and the source code on awesome's website (linked above).
+    - awesome can be found in most distribution repositories, and the source can be found on the
+      website (linked above)
     - once awesome is installed, create a directory in your home folder called .config/awesome
       (if .config does not already exist, it will have to be created first)
-    - to install ArchByte, enter the following commands in a terminal:
+    - to install linux_blues, enter the following commands in a terminal:
         cd $HOME/.config/awesome
-        git clone git://github.com/slackbyte/ArchByte.git
+        git clone git://github.com/slackbyte/linux_blues.git
     - if awesome is currently running, it will have to be restarted (shortcut: Mod4+Shift+r)
-    - celebrate your success in installing ArchByte in whatever way you are accustomed
-
-TODO (in order of priority):
-    - change font (roboto?)
-    - add mouse-over tooltips to widgets (possibly using naughty) [WIP]
-        - mousing over CPU widget will display a list of the status of all individual cpus
-        - more is planned and even more will be created
-    - add naughty support [WIP]
-        - integrate common applications with naughty through dbus
-    - much more is constantly being added! If you have an idea, don't hesitate to suggest it!
+    - celebrate your success in installing linux_blues in whatever way you are accustomed
 
 
 Suggestions are always more than welcome! If you are having issues, as always google is your friend
@@ -76,5 +67,4 @@ though I maintain that I am not responsible for any problems that result from yo
 this configuration or theme.
 
 Contact:
-slackbyte256@gmail.com with "ArchByte" as the subject line 
-
+slackbyte256@gmail.com with "linux_blues" as the subject line 
