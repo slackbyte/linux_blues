@@ -1,6 +1,9 @@
+local awful = require("awful")
+
 -- linux_blues --
 theme = {}
 
+-- Pretty colors!
 theme.font     = "sans 8"
 theme.blue     = "#1692D0"
 theme.darkblue = "#08364D"
@@ -60,7 +63,6 @@ theme.menu_width  = "100"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
 
 -- Define the image to load
 theme.titlebar_close_button_normal = "/usr/share/awesome/themes/default/titlebar/close_normal.png"
@@ -87,7 +89,7 @@ theme.titlebar_maximized_button_normal_active = "/usr/share/awesome/themes/defau
 theme.titlebar_maximized_button_focus_active  = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
 -- You can use your own command to set your wallpaper
-theme.wallpaper = "/home/slackbyte/.config/awesome/themes/linux_blues/background.png"
+theme.wallpaper = awful.util.getdir("config") .. "/themes/linux_blues/background.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = "/usr/share/awesome/themes/default/layouts/fairhw.png"
