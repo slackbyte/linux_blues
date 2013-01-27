@@ -1,12 +1,13 @@
 ---- linux_blues ----
-A minimalist, yet elegant configuration and theme for the awesome window manager (version 3.5).
+A minimalist, yet elegant configuration and theme for the awesome window manager (v3.5).
 
 awesome window manager: http://awesome.naquadah.org
 
 
 DESCRIPTION:
-    Although I consider myself to be a power user, linux_blues is created with the average Linux
-    user in mind. My goal is for both the power user and average user to feel right at home.
+    Although I consider myself to be a power user, linux_blues is created with the
+    average Linux user in mind. My goal is for both the power user and average user
+    to feel right at home.
 
 FEATURES:
     - Clean, minimal interface
@@ -14,7 +15,8 @@ FEATURES:
         - Color feedback to reflect current state
         - Mouse over to reveal more information
     - Support for dynamic control of window transparency
-    - I am constantly adding things when I have more ideas and I am very open to suggestions!
+    - I am constantly adding things when I have more ideas and I am very open to
+      suggestions!
 
 CUSTOM KEYBOAD SHORTCUTS:
     - modkey + i
@@ -47,24 +49,28 @@ DEPENDENCIES:
     - [OPTIONAL] xcompmgr for window transparency support
         - also, you will need to run it at startup by adding "xcompmgr &" to your 
           xinitrc file before the line "exec awesome"
-          - your xinitrc file can usually be found at either ~/.xinitrc or /etc/X11/xinit/xinitrc
+          - your xinitrc file can usually be found at either ~/.xinitrc
+            or /etc/X11/xinit/xinitrc
 
 INSTALLATION:
-    - awesome can be found in most distribution repositories, and the source can be found on the
-      website (linked above)
-    - once awesome is installed, create a directory in your home folder called .config/awesome
-      (if .config does not already exist, it will have to be created first)
+    - awesome can be found in most distribution repositories, and the source can
+      be found on the website (linked above)
+    - once awesome is installed, create a directory in your home folder
+      called .config/awesome (if .config does not already exist, it will have
+      to be created first)
     - to install linux_blues, enter the following commands in a terminal:
         cd $HOME/.config/awesome
         git clone git://github.com/slackbyte/linux_blues.git
-    - if awesome is currently running, it will have to be restarted (shortcut: Mod4+Shift+r)
-    - celebrate your success in installing linux_blues in whatever way you are accustomed
+    - if awesome is currently running, it will have to be restarted
+      (shortcut: Mod4+Shift+r)
+    - celebrate your success in installing linux_blues in whatever way you
+      are accustomed
 
 
-Suggestions are always more than welcome! If you are having issues, as always google is your friend
-and mine. But if that is somehow unsuccessful, I am willing to attempt to help you in any way I can,
-though I maintain that I am not responsible for any problems that result from you choosing to use
-this configuration or theme.
+Suggestions are always more than welcome! If you are having issues, as always google
+is your friend and mine. But if that is somehow unsuccessful, I am willing to attempt
+to help you in any way I can, though I maintain that I am not responsible for any
+problems that result from you choosing to use this configuration or theme.
 
 Contact:
 slackbyte256@gmail.com with "linux_blues" as the subject line 
