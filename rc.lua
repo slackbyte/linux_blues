@@ -72,9 +72,11 @@ naughty.config.defaults =
     fg            = beautiful.fg_normal,
     bg            = beautiful.bg_normal,
     border_color  = beautiful.border_focus,
+    opacity       = 0.9,
     border_width  = 1,
     hover_timeout = nil
 }
+naughty.notify({ title="test", text="text" })
 
 --naughty.config.presets.critical = { fg = beautiful.bg_urgent,
 
