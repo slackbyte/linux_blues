@@ -47,10 +47,6 @@ DEPENDENCIES:
         - or you can just delete the line in rc.lua that says
             eminent = require("eminent")
     - [OPTIONAL] xcompmgr for window transparency support
-        - also, you will need to run it at startup by adding "xcompmgr &" to your 
-          xinitrc file before the line "exec awesome"
-          - your xinitrc file can usually be found at either ~/.xinitrc
-            or /etc/X11/xinit/xinitrc
 
 INSTALLATION:
     - awesome can be found in most distribution repositories, and the source can
