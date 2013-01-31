@@ -76,7 +76,8 @@ naughty.config.defaults =
     border_width  = 1,
     hover_timeout = nil
 }
-naughty.notify({ title="test", text="text" })
+-- Test notification
+--naughty.notify({ title="Notification notification", text="You are being notified of this notification." })
 
 --naughty.config.presets.critical = { fg = beautiful.bg_urgent,
 
