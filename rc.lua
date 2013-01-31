@@ -13,7 +13,7 @@ require("eminent")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init(awful.util.getdir("config") .. "/themes/archbyte/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/themes/linux_blues/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xterm"
@@ -199,7 +199,7 @@ spacer.text = " "
 
 -- widget separator
 separator = widget({ type = "textbox" })
-separator.text = pangoify("fgcolor", theme.arch_grey, " :: ")
+separator.text = pangoify("fgcolor", theme.grey, " :: ")
 
 
 -- cpu widget
