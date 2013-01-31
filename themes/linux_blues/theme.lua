@@ -1,32 +1,32 @@
--- archbyte --
+-- linux_blues --
 theme = {}
 
 theme.font          = "sans 8"
-theme.arch_blue     = "#1692D0"
-theme.arch_darkblue = "#08364D"
-theme.arch_green    = "#16D016"
-theme.arch_darkgreen= "#084C08"
-theme.arch_red      = "#D01616"
-theme.arch_darkred  = "#4D0808"
-theme.arch_white    = "#FEFEFE"
-theme.arch_grey     = "#D0D0D0"
-theme.arch_darkgrey = "#4C4C4C"
-theme.arch_black    = "#0D0D0D"
+theme.blue     = "#1692D0"
+theme.darkblue = "#08364D"
+theme.green    = "#16D016"
+theme.darkgreen= "#084C08"
+theme.red      = "#D01616"
+theme.darkred  = "#4D0808"
+theme.white    = "#FEFEFE"
+theme.grey     = "#D0D0D0"
+theme.darkgrey = "#4C4C4C"
+theme.black    = "#0D0D0D"
 
-theme.bg_normal     = theme.arch_black
-theme.bg_focus      = theme.arch_black
-theme.bg_urgent     = theme.arch_red
-theme.bg_minimize   = theme.arch_darkgrey
+theme.bg_normal     = theme.black
+theme.bg_focus      = theme.black
+theme.bg_urgent     = theme.red
+theme.bg_minimize   = theme.darkgrey
 
-theme.fg_normal     = theme.arch_white
-theme.fg_focus      = theme.arch_blue
-theme.fg_urgent     = theme.arch_white
-theme.fg_minimize   = theme.arch_white
+theme.fg_normal     = theme.white
+theme.fg_focus      = theme.blue
+theme.fg_urgent     = theme.white
+theme.fg_minimize   = theme.white
 
 -- border settings
-theme.border_normal = theme.arch_darkgrey
-theme.border_focus  = theme.arch_darkblue
-theme.border_marked = theme.arch_darkred
+theme.border_normal = theme.darkgrey
+theme.border_focus  = theme.darkblue
+theme.border_marked = theme.darkred
 theme.border_width  = "1"
 
 theme.tooltip_opacity = .80
