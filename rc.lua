@@ -123,14 +123,10 @@ mymainmenu = awful.menu() -- Disable the menu... who actually uses that?
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
+
 function pangoify (attribute, value, text)
    return "<span " .. attribute .. "=\"" .. value .. "\">" .. text .. "</span>"
 end
-
-local mouseIsVisible = true
-local screenWidth = 1366
-local screenHeight = 768
-local mouseRestoreLoc = { x = 0, y = 0 }
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -635,12 +631,10 @@ clientkeys = awful.util.table.join(
 
     awful.key({ modkey, "Shift"   }, "m", 
             function ()
-                if mouseIsVisible then
-                    mouseIsVisible = false
-                    mouse.coords({ x=screenWidth*1.5, y=screenHeight*1.5 })
+                if mouse.coords().x < screen[1].geometry.width-1 or mouse.coords().y < screen[1].geometry.height-1 then
+                    mouse.coords({ x=screen[1].geometry.width, y=screen[1].geometry.height })
                 else
-                    mouse.coords({ x=screenWidth/2, y=screenHeight/2 })
-                    mouseIsVisible = true
+                    mouse.coords({ x=screen[1].geometry.width/2, y=screen[1].geometry.height/2 })
                 end
             end)
 )
