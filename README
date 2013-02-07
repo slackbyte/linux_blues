@@ -43,9 +43,6 @@ CUSTOM KEYBOAD SHORTCUTS:
 
 DEPENDENCIES:
     - vicious (http://git.sysphere.org/vicious/)
-    - eminent (http://git.glacicle.org/eminent)
-        - or you can just delete the line in rc.lua that says
-            eminent = require("eminent")
     - [OPTIONAL] xcompmgr for window transparency support
 
 INSTALLATION:
