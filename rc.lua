@@ -638,13 +638,25 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "[", function (c) c.opacity = 0.05 end),
 
     awful.key({ modkey, "Shift"   }, "m", 
-            function ()
-                if mouse.coords().x < screen[1].geometry.width-1 or mouse.coords().y < screen[1].geometry.height-1 then
-                    mouse.coords({ x=screen[1].geometry.width, y=screen[1].geometry.height })
-                else
-                    mouse.coords({ x=screen[1].geometry.width/2, y=screen[1].geometry.height/2 })
-                end
-            end)
+        function ()
+            if mouse.coords().x < screen[1].geometry.width-1 or mouse.coords().y < screen[1].geometry.height-1 then
+                mouse.coords({ x=screen[1].geometry.width, y=screen[1].geometry.height })
+            else
+                mouse.coords({ x=screen[1].geometry.width/2, y=screen[1].geometry.height/2 })
+            end
+        end),
+    awful.key({ modkey }, "b",
+        function ()
+            if top_wibox[mouse.screen].visible then
+                vicious.suspend()
+                top_wibox[mouse.screen].visible = false
+                bottom_wibox[mouse.screen].visible = false
+            else
+                vicious.activate()
+                top_wibox[mouse.screen].visible = true
+                bottom_wibox[mouse.screen].visible = true
+            end
+        end)
 )
 
 -- Compute the maximum number of digit we need, limited to 9
