@@ -544,6 +544,14 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey },            "d",
+        function () 
+            awful.util.spawn( "dmenu_run -i -p 'Run command: '" .. 
+            " -nb '" .. beautiful.bg_normal .. "'" ..
+            " -nf '" .. beautiful.fg_normal .. "'" ..
+            " -sb '" .. beautiful.bg_focus .. "'" ..
+            " -sf '" .. beautiful.fg_focus .. "'" )
+        end),
 
     awful.key({ modkey }, "x",
               function ()

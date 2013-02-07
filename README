@@ -19,6 +19,8 @@ FEATURES:
       suggestions!
 
 CUSTOM KEYBOAD SHORTCUTS:
+    - modkey + d
+        launches dmenu prompt
     - modkey + i
         launches default browser (requires $BROWSER to be defined)
     - modkey + Shift + i
