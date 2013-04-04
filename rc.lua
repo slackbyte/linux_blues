@@ -623,7 +623,6 @@ clientkeys = awful.util.table.join(
             else
                 c.opacity = 1.00
             end
-            c.redraw()
         end),
     awful.key({ modkey,           }, "[",
         function (c)
@@ -632,7 +631,6 @@ clientkeys = awful.util.table.join(
             else
                 c.opacity = 0.00
             end
-            c.redraw()
         end),
     awful.key({ modkey, "Shift"   }, "]", function (c) c.opacity = 1.00 end),
     awful.key({ modkey, "Shift"   }, "[", function (c) c.opacity = 0.05 end),
