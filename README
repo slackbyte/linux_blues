@@ -54,8 +54,9 @@ INSTALLATION:
       called .config/awesome (if .config does not already exist, it will have
       to be created first)
     - to install linux_blues, enter the following commands in a terminal:
-        cd $HOME/.config/awesome
-        git clone git://github.com/slackbyte/linux_blues.git
+         cd /tmp
+         git clone git://github.com/slackbyte/linux_blues.git
+         cp -r /tmp/linux_blues/* $HOME/.config/awesome
     - if awesome is currently running, it will have to be restarted
       (shortcut: Mod4+Shift+r)
     - celebrate your success in installing linux_blues in whatever way you
