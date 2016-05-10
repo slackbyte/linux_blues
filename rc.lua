@@ -338,6 +338,8 @@ vol_tooltip:add_to_object(vol_bar_widget)
 
 
 -- net widgets
+vicious.cache(vicious.widgets.net)
+
 upload_text_widget = wibox.widget.textbox()
 upload_text_widget:set_text("UP")
 upload_text_layout = wibox.layout.margin(upload_text_widget, left_margin, right_margin, top_margin, bottom_margin)
